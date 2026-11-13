@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>InkWorx — You Found Us</title>
+<meta name="theme-color" content="#0E0D0C" />
+<style>
+  :root{
+    --ink:#0E0D0C; --ink-2:#151210; --bone:#ECE4D7; --bone-dim:#9E9484;
+    --ox:#C0392B; --ox-deep:#9E2B25; --gold:#C6A15B;
+    --hair:rgba(236,228,215,.14); --hair-2:rgba(236,228,215,.07);
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    margin:0; background:var(--ink); color:var(--bone);
+    font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+    -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
+    display:flex; align-items:center; justify-content:center; padding:clamp(18px,4vw,40px);
+    /* faint ambient vignette + a whisper of oxblood, like ink bleeding into paper */
+    background-image:
+      radial-gradient(120% 90% at 50% -10%, rgba(158,43,37,.14), transparent 55%),
+      radial-gradient(100% 80% at 50% 120%, rgba(0,0,0,.6), transparent 60%);
+  }
+  .sheet{
+    position:relative; width:min(680px,100%); padding:clamp(38px,6vw,66px) clamp(26px,5vw,60px);
+    text-align:center;
+    /* the flash frame — a fine double gold rule, crisp at any size */
+    border:1px solid rgba(198,161,91,.44);
+  }
+  .sheet::before{content:""; position:absolute; inset:7px; border:1px solid rgba(198,161,91,.2); pointer-events:none}
+  /* small corner ticks sit on the outer rule */
+  .tick{position:absolute; width:6px; height:6px; border:1px solid var(--gold); opacity:.65}
+  .tick.tl{top:-3px; left:-3px; border-right:0; border-bottom:0}
+  .tick.tr{top:-3px; right:-3px; border-left:0; border-bottom:0}
+  .tick.bl{bottom:-3px; left:-3px; border-right:0; border-top:0}
+  .tick.br{bottom:-3px; right:-3px; border-left:0; border-top:0}
+
+  .eyebrow{
+    font-size:11.5px; letter-spacing:.32em; text-transform:uppercase;
+    color:var(--gold); font-weight:600; margin:0 0 clamp(20px,4vw,30px);
+  }
+  .eyebrow .dot{display:inline-block; width:4px; height:4px; border-radius:50%; background:var(--ox); vertical-align:middle; margin:0 .7em; transform:translateY(-1px)}
+
+  h1{
+    font-family:"Hoefler Text","Baskerville","Palatino Linotype",Georgia,serif;
+    font-weight:500; font-size:clamp(46px,10vw,88px); line-height:.98; letter-spacing:-.01em;
+    margin:0; text-wrap:balance;
+  }
+  h1 .amp{font-style:italic; color:var(--ox)}
+  .rule{display:flex; align-items:center; justify-content:center; gap:14px; margin:clamp(24px,5vw,34px) auto clamp(22px,4vw,28px); color:var(--gold)}
+  .rule .line{height:1px; width:min(90px,20vw); background:linear-gradient(90deg,transparent,var(--hair) 40%,var(--gold))}
+  .rule .line.r{background:linear-gradient(90deg,var(--gold),var(--hair) 60%,transparent)}
+  .rule .mark{opacity:.85}
+
+  .lede{
+    font-size:clamp(16px,2.4vw,19px); line-height:1.62; color:var(--bone);
+    max-width:46ch; margin:0 auto; font-weight:400;
+  }
+  .lede .soft{color:var(--bone-dim)}
+  .wink{
+    margin:clamp(26px,5vw,34px) auto 0; max-width:40ch;
+    font-size:13px; line-height:1.55; color:var(--bone-dim); font-style:italic;
+  }
+
+  .foot{margin-top:clamp(34px,7vw,52px); display:flex; flex-direction:column; gap:10px; align-items:center}
+  .wordmark{font-size:12.5px; letter-spacing:.42em; text-transform:uppercase; font-weight:700; color:var(--bone)}
+  .wordmark b{color:var(--ox); font-weight:700}
+  .tag{font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--bone-dim)}
+
+  .reveal{opacity:0; transform:translateY(10px); animation:rise .9s .5s cubic-bezier(.2,.7,.2,1) forwards}
+  .reveal.d2{animation-delay:.66s}
+  .reveal.d3{animation-delay:.82s}
+  .reveal.d4{animation-delay:.98s}
+
+  @keyframes rise{to{opacity:1; transform:none}}
+  @media (prefers-reduced-motion:reduce){
+    .reveal{animation:none; opacity:1; transform:none}
+  }
+</style>
+</head>
+<body>
+  <main class="sheet">
+    <span class="tick tl"></span><span class="tick tr"></span><span class="tick bl"></span><span class="tick br"></span>
+
+    <p class="eyebrow reveal">InkWorx <span class="dot"></span> Private Preview</p>
+
+    <h1 class="reveal d2">You found <span class="amp">us.</span></h1>
+
+    <div class="rule reveal d3" aria-hidden="true">
+      <span class="line"></span>
+      <svg class="mark" width="26" height="26" viewBox="0 0 26 26" fill="none">
+        <path d="M13 2 L15.4 10.6 L24 13 L15.4 15.4 L13 24 L10.6 15.4 L2 13 L10.6 10.6 Z" fill="var(--ox)"/>
+      </svg>
+      <span class="line r"></span>
+    </div>
+
+    <p class="lede reveal d3">
+      We're putting the finishing touches on <strong>InkWorx</strong> — the operating system built
+      for tattoo &amp; piercing studios — and we're <em>genuinely</em> excited to put it in your hands.
+      <span class="soft">Soon.</span>
+    </p>
+
+    <p class="wink reveal d4">
+      Walk-ins aren't open yet — but you clearly know where to look. Save the spot; we'll make it worth the wait.
+    </p>
+
+    <footer class="foot reveal d4">
+      <div class="wordmark">Ink<b>W</b>orx</div>
+      <div class="tag">The studio, handled</div>
+    </footer>
+  </main>
+</body>
+</html>

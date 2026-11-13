@@ -1,0 +1,16 @@
+[Unit]
+Description=Atlas approved apt update and upgrade
+Documentation=file:/etc/systemd/system/atlas-apt-upgrade.service
+
+[Service]
+Type=oneshot
+User=root
+Environment=DEBIAN_FRONTEND=noninteractive
+ExecStart=/usr/bin/apt-get update
+ExecStart=/usr/bin/apt-get -y -o Dpkg::Options::=--force-confdef -o Dpkg::Options::=--force-confold upgrade
+TimeoutStartSec=30min
+StandardOutput=journal
+StandardError=journal
+# Deliberately outside atlas.service's read-only filesystem namespace and cgroup.
+# No shell, arbitrary options, pre/post hooks, EnvironmentFile, or Install section.
+# Do not enable this unit: Atlas starts it only for an approved apt-upgrade action.

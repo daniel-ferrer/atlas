@@ -1,0 +1,41 @@
+[Unit]
+Description=Atlas host agent
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+# Its own low-privilege user — NOT the user Otto runs as, and NOT root. These explicit
+# groups grant Docker socket and journal reads; no systemd mutation access is granted.
+User=<ATLAS_USER>
+SupplementaryGroups=docker systemd-journal
+# Install smartmontools and grant only the read-only fail2ban/SMART commands through sudoers:
+# Cmnd_Alias ATLAS_RO = /usr/bin/fail2ban-client status, /usr/bin/fail2ban-client status *, /usr/sbin/smartctl -j -a *, /usr/sbin/smartctl -a *, /usr/sbin/smartctl --scan, /usr/sbin/smartctl --scan-open
+# Optional, for GET /api/config?id=backup-env only (Atlas redacts it before serving): append
+# the exact command ", /usr/bin/cat /etc/restic/env" to ATLAS_RO. Never a wildcard cat.
+# atlas ALL=(root) NOPASSWD: ATLAS_RO
+# Replace "atlas" if User below differs, and ensure executable paths match the host. Atlas uses
+# sudo -n, so missing tools or policy never prompt and instead produce an API warning.
+# Never change User to root.
+WorkingDirectory=<ATLAS_DIR>
+# Bind to the tailnet address, never 0.0.0.0. The token lives in an EnvironmentFile with
+# 0600 perms owned by <ATLAS_USER>, so it is never baked into this unit.
+Environment=ATLAS_ADDR=<TAILNET_IP>:7788
+Environment=ATLAS_AUDIT=<ATLAS_DIR>/atlas-audit.log
+EnvironmentFile=<ATLAS_ENV_FILE>
+# Host actions ship OFF. Optional exact grants/drop-in: deploy/actions/README.md.
+# Preserve atlas-audit.log and atlas-actions/ across deploys and rollbacks.
+ExecStart=<ATLAS_DIR>/atlas-agent
+
+# Hardening remains in place alongside the narrow supplementary-group grants above.
+# Required for the tightly scoped sudo elevation documented above.
+NoNewPrivileges=false
+ProtectSystem=strict
+ProtectHome=true
+PrivateTmp=true
+ReadWritePaths=<ATLAS_DIR>
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

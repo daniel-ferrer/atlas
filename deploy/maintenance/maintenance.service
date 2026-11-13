@@ -1,0 +1,36 @@
+[Unit]
+Description=Atlas maintenance black-hole server
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=<MAINTENANCE_USER>
+WorkingDirectory=<MAINTENANCE_DIR>
+Environment=MAINT_ADDR=127.0.0.1:8081
+Environment=MAINT_PAGE=coming-soon
+ExecStart=<MAINTENANCE_DIR>/maintenance-server
+
+# Keep the host loopback namespace: PrivateNetwork=true would prevent cloudflared
+# from reaching this listener. IPAddressDeny still prevents non-loopback traffic.
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+PrivateTmp=true
+PrivateDevices=true
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+RestrictNamespaces=true
+LockPersonality=true
+MemoryDenyWriteExecute=true
+RestrictAddressFamilies=AF_INET AF_INET6
+IPAddressDeny=any
+IPAddressAllow=localhost
+SystemCallFilter=@system-service
+SystemCallArchitectures=native
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

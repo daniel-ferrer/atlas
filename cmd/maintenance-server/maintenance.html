@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>InkWorx — Just a Touch-Up</title>
+<meta name="theme-color" content="#0E0D0C" />
+<style>
+  :root{
+    --ink:#0E0D0C; --ink-2:#151210; --bone:#ECE4D7; --bone-dim:#9E9484;
+    --ox:#C0392B; --ox-deep:#9E2B25; --gold:#C6A15B; --amber:#D9A441;
+    --hair:rgba(236,228,215,.14);
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    margin:0; background:var(--ink); color:var(--bone);
+    font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+    -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
+    display:flex; align-items:center; justify-content:center; padding:clamp(18px,4vw,40px);
+    background-image:
+      radial-gradient(120% 90% at 50% -10%, rgba(158,43,37,.12), transparent 55%),
+      radial-gradient(100% 80% at 50% 120%, rgba(0,0,0,.6), transparent 60%);
+  }
+  .sheet{position:relative; width:min(640px,100%); padding:clamp(38px,6vw,60px) clamp(26px,5vw,58px); text-align:center; border:1px solid rgba(198,161,91,.42)}
+  .sheet::before{content:""; position:absolute; inset:7px; border:1px solid rgba(198,161,91,.19); pointer-events:none}
+  .tick{position:absolute; width:6px; height:6px; border:1px solid var(--gold); opacity:.6}
+  .tick.tl{top:-3px; left:-3px; border-right:0; border-bottom:0}
+  .tick.tr{top:-3px; right:-3px; border-left:0; border-bottom:0}
+  .tick.bl{bottom:-3px; left:-3px; border-right:0; border-top:0}
+  .tick.br{bottom:-3px; right:-3px; border-left:0; border-top:0}
+
+  .status{
+    display:inline-flex; align-items:center; gap:9px; margin:0 0 clamp(22px,4vw,30px);
+    font-size:11px; letter-spacing:.26em; text-transform:uppercase; color:var(--amber); font-weight:600;
+  }
+  .status .beat{position:relative; width:8px; height:8px}
+  .status .beat i{position:absolute; inset:0; border-radius:50%; background:var(--amber)}
+  .status .beat i.pulse{animation:pulse 2.4s ease-out infinite}
+  h1{
+    font-family:"Hoefler Text","Baskerville","Palatino Linotype",Georgia,serif;
+    font-weight:500; font-size:clamp(42px,9vw,78px); line-height:1; letter-spacing:-.01em; margin:0; text-wrap:balance;
+  }
+  h1 .em{font-style:italic; color:var(--ox)}
+  .rule{display:flex; align-items:center; justify-content:center; gap:14px; margin:clamp(22px,5vw,32px) auto clamp(20px,4vw,26px); color:var(--gold)}
+  .rule .line{height:1px; width:min(84px,20vw); background:linear-gradient(90deg,transparent,var(--hair) 40%,var(--gold))}
+  .rule .line.r{background:linear-gradient(90deg,var(--gold),var(--hair) 60%,transparent)}
+  .lede{font-size:clamp(15.5px,2.3vw,18px); line-height:1.62; color:var(--bone); max-width:44ch; margin:0 auto}
+  .lede .soft{color:var(--bone-dim)}
+  .wink{margin:clamp(24px,5vw,32px) auto 0; max-width:38ch; font-size:13px; line-height:1.55; color:var(--bone-dim); font-style:italic}
+  .foot{margin-top:clamp(32px,7vw,48px); display:flex; flex-direction:column; gap:10px; align-items:center}
+  .wordmark{font-size:12.5px; letter-spacing:.42em; text-transform:uppercase; font-weight:700; color:var(--bone)}
+  .wordmark b{color:var(--ox)}
+  .tag{font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--bone-dim)}
+
+  .reveal{opacity:0; transform:translateY(10px); animation:rise .9s .5s cubic-bezier(.2,.7,.2,1) forwards}
+  .reveal.d2{animation-delay:.64s}.reveal.d3{animation-delay:.8s}.reveal.d4{animation-delay:.96s}
+  @keyframes rise{to{opacity:1; transform:none}}
+  @keyframes pulse{0%{transform:scale(1);opacity:.7}70%{transform:scale(3.2);opacity:0}100%{opacity:0}}
+  @media (prefers-reduced-motion:reduce){
+    .reveal{animation:none;opacity:1;transform:none}
+    .status .beat i.pulse{animation:none;display:none}
+  }
+</style>
+</head>
+<body>
+  <main class="sheet">
+    <span class="tick tl"></span><span class="tick tr"></span><span class="tick bl"></span><span class="tick br"></span>
+
+    <p class="status reveal"><span class="beat"><i></i><i class="pulse"></i></span> Back Shortly</p>
+
+    <h1 class="reveal d2">Just a <span class="em">touch-up.</span></h1>
+
+    <div class="rule reveal d3" aria-hidden="true">
+      <span class="line"></span>
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+        <path d="M12 2 L14.1 9.9 L22 12 L14.1 14.1 L12 22 L9.9 14.1 L2 12 L9.9 9.9 Z" fill="var(--ox)"/>
+      </svg>
+      <span class="line r"></span>
+    </div>
+
+    <p class="lede reveal d3">
+      InkWorx is closed for a quick touch-up. We're making things sharper and we'll have the doors
+      open again in a few minutes. <span class="soft">Thanks for your patience.</span>
+    </p>
+
+    <p class="wink reveal d4">
+      Even the cleanest linework needs the occasional pass. Come back soon — we won't be long.
+    </p>
+
+    <footer class="foot reveal d4">
+      <div class="wordmark">Ink<b>W</b>orx</div>
+      <div class="tag">The studio, handled</div>
+    </footer>
+  </main>
+</body>
+</html>

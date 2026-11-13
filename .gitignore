@@ -1,0 +1,18 @@
+# built binary
+/atlas-agent
+
+# runtime artifacts
+*.log
+atlas-audit.log
+/atlas-actions/
+
+# local env / secrets — never commit the token
+.env
+*.env
+atlas.env
+
+# go
+/vendor/
+
+# Otto workspace state (local only)
+/.otto/

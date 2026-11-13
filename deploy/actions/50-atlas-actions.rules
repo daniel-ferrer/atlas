@@ -1,0 +1,27 @@
+// Operator template: fill only exact disposable/application unit names.
+// Empty lists / false below grant nothing. Never add protected units.
+polkit.addRule(function(action, subject) {
+    if (action.id !== "org.freedesktop.systemd1.manage-units" || subject.user !== "atlas") {
+        return polkit.Result.NOT_HANDLED;
+    }
+    var restartUnits = [];
+    var allowApt = false;
+    var aptUnit = "atlas-apt-upgrade.service";
+    // run-maintenance: Atlas's fixed task mapping. Set true only after installing
+    // the reviewed otto-maint-* oneshots; never add other units here.
+    var allowMaintenance = false;
+    var maintenanceUnits = ["otto-maint-backup-unlock.service", "otto-maint-backup-cache-dir.service"];
+    var unit = action.lookup("unit");
+    var verb = action.lookup("verb");
+    var protectedUnits = ["otto.service", "atlas.service", "tailscaled.service", aptUnit];
+    if (verb === "restart" && protectedUnits.indexOf(unit) === -1 && restartUnits.indexOf(unit) !== -1) {
+        return polkit.Result.YES;
+    }
+    if (allowApt && verb === "start" && unit === aptUnit) {
+        return polkit.Result.YES;
+    }
+    if (allowMaintenance && verb === "start" && maintenanceUnits.indexOf(unit) !== -1) {
+        return polkit.Result.YES;
+    }
+    return polkit.Result.NOT_HANDLED;
+});
